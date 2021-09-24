@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Dialog Analog</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+
+
+            var state = false;
+            var vel = 0;
+            var clertIME;
+            $("#dialogText").click(function(){
+
+       
+
+
+                if(state == false){
+                    
+                    state = true;
+
+                    $("#indicator").addClass("acelerate");
+                    $("#indicator").removeClass("stop");
+
+
+                    clertIME = setInterval(function(){
+
+                        $("#dialogText").html(vel+" km/s");
+
+                        if(vel == 400){
+
+                            clearInterval(clertIME);
+                        }
+                        vel++;
+
+                    },10)
+                                        
+                }else{
+
+                    clertIME = setInterval(function(){
+
+                        $("#dialogText").html(vel+" km/s");
+
+                        if(vel == 0){
+
+                            clearInterval(clertIME);
+                        }
+
+                        vel--;
+
+                    },10)
+                    $("#indicator").addClass("stop");
+                    $("#indicator").removeClass("acelerate");
+                    state = false;
+                }
+
+            });
+
+        });
+    </script>
+    <style>
+
+        body{
+            margin:0px;
+        }
+        #contenido{
+            position: fixed;
+            width:100%;
+            height:100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #formContente{
+            width: 300px;
+            height:300px;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #dialog{
+            width: 150px;
+            height: 150px;
+            background:rgba(7, 255, 160, 0.904);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation:colorRo 3s ease infinite;
+            position:relative;
+        }
+        #dialogText{
+            width:130px;
+            height:130px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color:white;
+            background-color: rgb(20, 20, 20);;;
+            font-size: 25px;
+            border-radius: 50%;
+            
+        }
+        #indicator{
+            position: absolute;
+            background-image:url(./raund.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 300px;
+            height: 300px;
+            transform: rotate(-100deg);
+            z-index: -100;
+         
+            
+        }
+
+        .acelerate{
+            animation:acele 5s ease forwards;
+        }
+        .stop{
+            animation:stop 5s ease forwards;
+        }
+        @keyframes acele {
+            from{
+                transform: rotate(-100deg);
+            }to{
+
+                transform: rotate(100deg);
+            }
+        }
+        @keyframes stop {
+
+            from{
+                transform: rotate(100deg);
+            }to{
+
+                transform: rotate(-100deg);
+            } 
+        }
+        @keyframes identifier {
+            0%{
+                transform: rotate(-100deg);
+            }50%{
+                transform: rotate(100deg);
+            }
+            
+        }
+        @keyframes colorRo{
+            from{
+                filter: hue-rotate(0deg);
+            }to{
+                /*filter: hue-rotate(360deg);*/
+            }
+        }
+        @keyframes pulce {
+            0%,50%{
+                width:130px;
+                height:130px;
+            }
+            100%{
+                width:140px;
+                height:140px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div id="contenido">
+
+        <div id="formContente">
+
+
+            <div id="dialog">  
+
+                <div id="indicator"></div>
+
+                <div id="dialogText">
+
+                    0km/s
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
